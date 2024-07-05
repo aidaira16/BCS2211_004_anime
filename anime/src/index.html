@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Anime Scout</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+       .scout {
+            height: 200px;
+            width: 180px;
+            border-radius: 3cm;
+            border: 0.1cm black dashed;
+        }
+        body {
+            background-color: pink;
+        }
+        marquee {
+            color: darkred;
+        }
+        h2 {
+            color: brown;
+        }
+
+        /*buttons*/
+        .search {
+            background-color: firebrick;
+        }
+        .moredetail{
+            border-radius: 10px;
+            background-color: maroon;
+            color: #ddd;
+        }
+        .addtowatchlist{
+            background-color: maroon;
+            color: #ddd;
+        }
+        .thedetail{
+            background-color: cornflowerblue;
+        }
+        .update{
+            background-color: cornflowerblue;
+        }
+        .delete{
+            background-color: cornflowerblue;
+        }
+
+
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .anime-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        .anime-card img {
+            max-width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+        .anime-detail {
+            margin-top: 20px;
+        }
+        .watchlist-item {
+            
+            justify-content: space-between;
+            align-items: center;
+        }
+        #watchlist {
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            display: none;
+            z-index: 1000;
+            width: 300px;
+        }
+        #watchlist-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        #watchlist-toggle img {
+            width: 40px; /* Adjust the size as needed */
+            height: auto;
+        }
+        .watchlist-category {
+            margin-bottom: 20px;
+        }
+        .watchlist-category h3 {
+            margin-top: 0;
+        }
+        .category-selection {
+            margin-bottom: 10px;
+        }
+        #watchlist-category-container {
+            display: none; /* Hide by default */
+            margin-bottom: 10px;
+        }
+        #watchlist-category-container select {
+            margin-top: 5px;
+        }
+
+        /* Modal styles */
+        #anime-detail-modal {
+            position: fixed;
+            top: 20%;
+            right: 10px;
+            width: 300px;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: none; /* Hidden by default */
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+            z-index: 1001;
+            max-height: 80vh; /* Set maximum height */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        #anime-detail-modal h3 {
+            margin-top: 0;
+        }
+
+        #anime-detail-modal button {
+            background-color: firebrick;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #anime-detail-modal button:hover {
+            background-color: darkred;
+        }
+
+        #watchlist-category {
+            display: none;
+            position: fixed;
+            top: 20%;
+            right: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+            z-index: 1001;
+        }
+        
+        #watchlist-category label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        #watchlist-category select {
+            margin-bottom: 10px;
+        }
+        
+        #watchlist-category button {
+            background-color: firebrick;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        
+        #watchlist-category button:hover {
+            background-color: darkred;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: fixed;
+            top: 10%;
+            right: 10%;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            width: 400px;
+            max-height: 80vh; /* Limit the height of the modal */
+            overflow-y: auto; /* Add vertical scrollbar if needed */
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+            z-index: 1001;
+        }
+        
+        .modal-content img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        #category-container {
+            position: fixed;
+            top: 10%;
+            right: 10%;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            width: 300px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+            z-index: 1001;
+        }
+        
+        #category-container button {
+            margin-right: 10px;
+        }
+        .try{
+            display: flex;
+        }
+
+        #watchlist{
+        height: 400px; /* Adjust this height as needed */
+        overflow-y: auto; /* Enables vertical scrolling */
+        border: 1px solid #ddd; /* Optional: adds a border around the container */
+        padding: 10px; /* Optional: adds padding inside the container */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Watchlist container -->
+    <div id="watchlist">
+    </div>    
+
+    <div id="edit-form-container"></div>
+
+    <!-- Watchlist toggle button -->
+    <div id="watchlist-toggle" onclick="toggleWatchlist()">
+        <img src="watch.jpeg" alt="Watchlist">
+    </div>
+
+
+    <center><img class="scout" src="animescout.jpg"></center>
+    <br>
+    <marquee><h1>WELCOME TO ANIME SCOUT</h1></marquee>
+    <h2>Let's get start searching your favourite anime!!</h2>
+    <input type="text" id="anime_input" placeholder="Enter anime name">
+    <button class="search" onclick="buttonClicked()">Search</button>
+    <div id="demo1" class="anime-grid"></div>
+    <div id="anime_detail" class="anime-detail"></div>
+    
+    <script src="main2.js"></script>
+</body>
+</html>

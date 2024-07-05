@@ -1,0 +1,81 @@
+.scout {
+            height: 200px;
+            width: 180px;
+            border-radius: 3cm;
+            border: 0.1cm black dashed;
+        }
+        body {
+            background-color: pink;
+        }
+        marquee {
+            color: darkred;
+        }
+        h2 {
+            color: brown;
+        }
+        button {
+            background-color: firebrick;
+        }
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .anime-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        .anime-card img {
+            max-width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+        .anime-detail {
+            margin-top: 20px;
+        }
+        .watchlist-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #watchlist {
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            display: none;
+            z-index: 1000;
+            width: 300px;
+        }
+        #watchlist-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        #watchlist-toggle img {
+            width: 40px; /* Adjust the size as needed */
+            height: auto;
+        }
+        .watchlist-category {
+            margin-bottom: 20px;
+        }
+        .watchlist-category h3 {
+            margin-top: 0;
+        }
+        .category-selection {
+            margin-bottom: 10px;
+        }
+        #watchlist-category-container {
+            display: none; /* Hide by default */
+            margin-bottom: 10px;
+        }
+        #watchlist-category-container select {
+            margin-top: 5px;
+        }
